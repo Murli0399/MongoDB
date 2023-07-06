@@ -46,27 +46,54 @@ db.Customers.insertMany([
 
 ```
 3. Problem: Write a query to fetch all data from the Customers table / collection.
-
+```
+db.Customers.find({})
+```
 4. Problem: Write a query to select only the name and email fields for all customers.
-
+```
+db.Customers.find({}, { name: 1, email: 1 })
+```
 5. Problem: Write a query to fetch the customer with the id of 3.
-
+```
+db.Customers.findOne({ _id: "64a6b0f3f604ab1e13e029b5" })
+```
 6. Problem: Write a query to fetch all customers whose name starts with 'A'.
-
+```
+db.Customers.find({ name: { $regex: '^A', $options: 'i' } })
+```
 7. Problem: Write a query to fetch all customers, ordered by name in descending order.
-
+```
+db.Customers.find().sort({ name: -1 })
+```
 8. Problem: Write a query to update the address of the customer with id 4.
-
+```
+db.Customers.updateOne({ _id: 4 }, { $set: { address: "New Address" } })
+```
 9. Problem: Write a query to fetch the top 3 customers when ordered by id in ascending order.
-
+```
+db.Customers.find().sort({ _id: 1 }).limit(3)
+```
 10. Problem: Write a query to delete the customer with id 2.
-
+```
+db.Customers.deleteOne({ _id: 2 })
+```
 11. Problem: Write a query to count the number of customers.
-
+```
+db.Customers.countDocuments()
+```
 12. Problem: Write a query to fetch all customers except the first two when ordered by id in ascending order.
-
+```
+db.Customers.find().sort({ _id: 1 }).skip(2)
+```
 13. Problem: Write a query to fetch all customers whose id is greater than 2 and name starts with 'B'.
-
+```
+db.Customers.find({ _id: { $gt: 2 }, name: { $regex: '^B', $options: 'i' } })
+```
 14. Problem: Write a query to fetch all customers whose id is less than 3 or name ends with 's'.
-
+```
+db.Customers.find({ $or: [ { _id: { $lt: 3 } }, { name: { $regex: 's$', $options: 'i' } } ] })
+```
 15. Problem: Write a query to fetch all customers where the phone_number field is not set or is null.
+```
+db.Customers.find({ $or: [ { phone_number: { $exists: false } }, { phone_number: null } ] })
+```
