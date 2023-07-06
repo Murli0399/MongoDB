@@ -142,3 +142,367 @@ In the course, we can also elaborate on key differences between SQL and MongoDB,
     **MongoDB**: MongoDB uses JavaScript as its querying language. For developers familiar with JavaScript, MongoDB queries can feel intuitive. Its queries are represented as JSON-style documents.
     
     **Example**: In Uber, where developers might be iterating fast and dealing with semi-structured and geographically distributed data, they might benefit from MongoDB's intuitive, flexible query language to quickly
+
+## ****Querying in SQL and MongoDB****
+
+We'll consider an e-commerce scenario where we have a **`Products`** collection in MongoDB and a **`Products`** table in SQL. Here are the details:
+
+**MongoDB `Products` Collection Schema:**
+
+```
+{
+    "_id": ObjectId,
+    "name": String,
+    "price": Number,
+    "category": String,
+    "rating": Number,
+    "in_stock": Boolean
+}
+```
+
+**SQL `Products` Table Schema:**
+
+```
+CREATE TABLE Products (
+    ID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Price DECIMAL(10,2),
+    Category VARCHAR(100),
+    Rating DECIMAL(3,2),
+    In_Stock BOOLEAN
+);
+```
+
+The fields **`ID`** (SQL) / **`_id`** (MongoDB), **`Name`**, **`Price`**, **`Category`**, **`Rating`**, **`In_Stock`** represent the product's unique identifier, name, price, category, average user rating, and availability status respectively.
+
+### **Query Examples**
+
+**1. Fetching all Data:**
+
+Fetches all the documents in the collection or rows in the table.
+
+SQL:
+
+```
+SELECT * FROM Products;
+```
+
+MongoDB:
+
+```
+db.Products.find()
+```
+
+**2. Selecting Specific Fields:**
+
+Returns only the **`name`** and **`price`** fields from all documents/rows.
+
+SQL:
+
+```
+SELECT Name, Price FROM Products;
+```
+
+MongoDB:
+
+```
+db.Products.find({}, {name: 1, price: 1})
+```
+
+**3. Filtering Data:**
+
+Returns only the products which have a **`rating`** greater than 4.
+
+SQL:
+
+```
+SELECT * FROM Products WHERE Rating > 4;
+```
+
+MongoDB:
+
+```
+db.Products.find({rating: {$gt: 4}})
+```
+
+**4. Sorting Data:**
+
+Returns all products sorted by **`price`** in descending order.
+
+SQL:
+
+```
+SELECT * FROM Products ORDER BY Price DESC;
+```
+
+MongoDB:
+
+```
+db.Products.find().sort({price: -1})
+```
+
+**5. Counting Documents/Rows:**
+
+Counts the number of products in a specific **`category`**.
+
+SQL:
+
+```
+SELECT COUNT(*) FROM Products WHERE Category = 'Electronics';
+```
+
+MongoDB:
+
+```
+db.Products.count({category: 'Electronics'})
+```
+
+**6. Limiting Results:**
+
+Fetches the top 5 most expensive products.
+
+SQL:
+
+```
+SELECT * FROM Products ORDER BY Price DESC LIMIT 5;
+```
+
+MongoDB:
+
+```
+db.Products.find().sort({price: -1}).limit(5)
+```
+
+**7. Skipping Documents/Rows:**
+
+Fetches all products except the 5 most expensive ones.
+
+SQL:
+
+```
+SELECT * FROM Products ORDER BY Price DESC OFFSET 5;
+```
+
+MongoDB:
+
+```
+db.Products.find().sort({price: -1}).skip(5)
+```
+
+**8. Updating Documents/Rows:**
+
+Increases the **`price`** of all products in the 'Electronics' category by 10.
+
+SQL:
+
+```
+UPDATE Products SET Price = Price + 10 WHERE Category = 'Electronics';
+```
+
+MongoDB:
+
+```
+db.Products.updateMany({category: 'Electronics'}, {$inc: {price: 10}})
+```
+
+**9. Deleting Documents/Rows:**
+
+Deletes all products that are not **`in_stock`**.
+
+SQL:
+
+```
+DELETE FROM Products WHERE In_Stock = FALSE;
+```
+
+MongoDB:
+
+```
+db.Products.deleteMany({in_stock: false})
+```
+
+**10. Fetching Distinct Values:**
+
+Fetches distinct **`category`** values in the Products table or collection.
+
+SQL:
+
+```
+SELECT DISTINCT Category FROM Products;
+```
+
+MongoDB:
+
+```
+db.Products.distinct('category')
+```
+
+**11. Aggregating Data:**
+
+Calculates the average **`price`** of all products in the 'Electronics' category.
+
+SQL:
+
+```
+SELECT AVG(Price) FROM Products WHERE Category = 'Electronics';
+```
+
+MongoDB:
+
+```
+db.Products.aggregate([{$match: {category: 'Electronics'}}, {$group: {_id: null, avgPrice: {$avg: '$price'}}}])
+```
+
+**12. Grouping Data:**
+
+Groups products by **`category`** and counts the number of products in each category.
+
+SQL:
+
+```
+SELECT Category, COUNT(*) FROM Products GROUP BY Category;
+```
+
+MongoDB:
+
+```
+javascriptCopy code
+db.Products.aggregate([{$group: {_id: '$category', count: {$sum: 1}}}])
+
+```
+
+**13. Filtering with Multiple Conditions:**
+
+Fetches all products in the 'Electronics' category that have a **`rating`** higher than 4.
+
+SQL:
+
+```
+SELECT * FROM Products WHERE Category = 'Electronics' AND Rating > 4;
+```
+
+MongoDB:
+
+```
+javascriptCopy code
+db.Products.find({category: 'Electronics', rating: {$gt: 4}})
+
+```
+
+**14. Fetching Data with OR Condition:**
+
+Fetches all products that either have a **`rating`** higher than 4 or are **`in_stock`**.
+
+SQL:
+
+```
+SELECT * FROM Products WHERE Rating > 4 OR In_Stock = TRUE;
+```
+
+MongoDB:
+
+```
+db.Products.find({$or: [{rating: {$gt: 4}}, {in_stock: true}]})
+```
+
+**15. Using a LIKE Operator (SQL) / Regex (MongoDB):**
+
+Fetches all products where the **`name`** starts with "Ele".
+
+SQL:
+
+```
+SELECT * FROM Products WHERE Name LIKE 'Ele%';
+```
+
+MongoDB:
+
+```
+javascriptCopy code
+db.Products.find({name: {$regex: '^Ele'}})
+
+```
+
+**16. Updating a Single Document/Row:**
+
+Updates the **`price`** of a product with a specific ID.
+
+SQL:
+
+```
+UPDATE Products SET Price = 100 WHERE ID = 1;
+```
+
+MongoDB:
+
+```
+db.Products.updateOne({_id: ObjectId("uniqueID")}, {$set: {price: 100}})
+```
+
+**17. Joining Tables (SQL) / Embedding Documents (MongoDB):**
+
+For this example, we'll assume we have an **`Orders`** table or collection where each order has a product ID.
+
+SQL:
+
+```
+SELECT Orders.OrderID, Products.Name FROM Orders INNER JOIN Products ON Orders.ProductID = Products.ID;
+```
+
+MongoDB (Products document with an embedded **`Orders`** array):
+
+```
+db.Products.find({"Orders.OrderID": "uniqueOrderID"}, {name: 1, "Orders.$": 1})
+```
+
+**18. Inserting Multiple Rows/Documents:**
+
+Inserts multiple new products.
+
+SQL:
+
+```
+INSERT INTO Products (Name, Price, Category, Rating, In_Stock) VALUES ('Product 1', 99.99, 'Electronics', 4.5, TRUE), ('Product 2', 49.99, 'Books', 4.7, FALSE);
+```
+
+MongoDB:
+
+```
+db.Products.insertMany([{name: 'Product 1', price: 99.99, category: 'Electronics', rating: 4.5, in_stock: true}, {name: 'Product 2', price: 49.99,category: 'Books', rating: 4.7, in_stock: false}])
+```
+
+**19. Changing Data Type:**
+
+Changes the data type of the **`Price`** column in SQL or in MongoDB. (Let's assume it's currently a String/Text data type)
+
+SQL:
+
+```
+ALTER TABLE Products ALTER COLUMN Price TYPE DECIMAL(10,2) USING (Price::decimal);
+```
+
+MongoDB:
+
+MongoDB does not support changing the type of a field directly. We need to iterate over all documents and apply the conversion. Assuming we want to change **`price`** to a number:
+
+```
+db.Products.find().forEach(function(doc) { doc.price = Number(doc.price); db.Products.save(doc); })
+```
+
+**20. Searching for Null Values:**
+
+Fetches all products where the **`rating`** is not set or is null.
+
+SQL:
+
+```
+SELECT * FROM Products WHERE Rating IS NULL;
+```
+
+MongoDB:
+
+```
+db.Products.find({rating: null})
+```
+
+Remember, these examples have been simplified for clarity. Real-world applications might require more complex queries or data handling. Also, both SQL and MongoDB offer additional features and capabilities beyond the ones covered here.
