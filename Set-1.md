@@ -10,7 +10,41 @@ db.Customers.insertOne({
 
 ```
 2. Problem: Insert five rows / documents into the Customers table / collection with data of your choice.
+```
+db.Customers.insertMany([
+  {
+    "name": "Alice",
+    "email": "alice@example.com",
+    "address": "456 Elm St",
+    "phone_number": "555-5678"
+  },
+  {
+    "name": "Bob",
+    "email": "bob@example.com",
+    "address": "789 Oak St",
+    "phone_number": "555-9012"
+  },
+  {
+    "name": "Charlie",
+    "email": "charlie@example.com",
+    "address": "123 Maple Ave",
+    "phone_number": "555-3456"
+  },
+  {
+    "name": "Diana",
+    "email": "diana@example.com",
+    "address": "987 Pine St",
+    "phone_number": "555-7890"
+  },
+  {
+    "name": "Eve",
+    "email": "eve@example.com",
+    "address": "654 Cedar Ln",
+    "phone_number": "555-1234"
+  }
+])
 
+```
 3. Problem: Write a query to fetch all data from the Customers table / collection.
 
 4. Problem: Write a query to select only the name and email fields for all customers.
