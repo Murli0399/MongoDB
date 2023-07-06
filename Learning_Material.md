@@ -98,3 +98,47 @@ Choosing between SQL and MongoDB depends on the specific requirements of your pr
     - **Solution**: MongoDB would be an ideal choice in this scenario because it's designed for high-speed read operations. MongoDB stores data in a format similar to JSON, which can be read directly from the database to the web, making it a good fit for real-time analytics applications that require high read speeds and where data structure may vary.
 
 In the end, the choice between SQL and MongoDB largely depends on the specific use case and requirements of your project. It's common for businesses to use a combination of both SQL and NoSQL databases to leverage the strengths of each
+
+### **Key Differences Between SQL and MongoDB**
+
+In the course, we can also elaborate on key differences between SQL and MongoDB, such as:
+
+1. **Data Structure**
+    
+    **SQL**: SQL databases are table-based, meaning they store data in rows and columns, which is a good fit for applications requiring multi-row transactions like an accounting system or systems that need to maintain a strong relationship between data.
+    
+    **Example**: Zomato may use an SQL database to handle relationships between its restaurants, meals, customers, and order history. Each of these categories would be a table (e.g., Customers, Restaurants), with relationships between them (e.g., a Customer orders from a Restaurant).
+    
+    **MongoDB**: MongoDB is a document-based database, which stores data in BSON format, a binary representation of JSON documents. This flexible data model makes it easy to store and combine data of any structure, without losing data integrity.
+    
+    **Example**: Swiggy may use MongoDB to store detailed information about a food delivery, which may include complex nested data like customer information, order items with different food preferences, payment details, and dynamic data like real-time location updates.
+    
+2. **Schema**
+    
+    **SQL**: SQL databases have a predefined schema, which means you have to define tables and columns before you can store data. This provides a level of data consistency across the application.
+    
+    **Example**: Uber might use an SQL database to maintain a structured record of trips. Each trip has to have a defined set of data such as driver ID, rider ID, start time, end time, and fare, providing a consistent way to analyze the trips.
+    
+    **MongoDB**: MongoDB is schema-less, allowing you to create documents without having to define the structure of the document first, like the fields or the types of their values. This flexibility can speed up development in projects where structure is less certain.
+    
+    **Example**: A rapidly evolving application like a new feature in Swiggy might benefit from MongoDB's flexible schema, allowing developers to iterate and change the data model quickly based on new requirements without downtime or costly migrations.
+    
+3. **Scaling**
+    
+    **SQL**: SQL databases are scaled vertically by increasing the power of the hardware. While this often leads to increased costs, it also allows for powerful transactions and complex queries to be executed efficiently.
+    
+    **Example**: Zomato, with a large, consistent structure of restaurant menus and millions of customer reviews, may benefit from the vertical scaling capabilities of SQL, which can handle complex queries over these structured datasets.
+    
+    **MongoDB**: MongoDB, on the other hand, is designed with horizontal scaling in mind. You can add more servers to your MongoDB cluster to handle the extra load. This approach can be more cost-effective and allows MongoDB to handle large amounts of data and traffic.
+    
+    **Example**: Uber, dealing with huge data sets from millions of rides each day and needing to distribute this data geographically close to users for low latency, may benefit from MongoDB's horizontal scaling.
+    
+4. **Query Language**
+    
+    **SQL**: SQL databases use the SQL language which has a powerful query capability. It has a rich standard with a variety of functions and operators and supports complex queries to retrieve data.
+    
+    **Example**: A data analyst at Zomato might use SQL's powerful querying capabilities to perform complex analysis, like identifying the average rating of restaurants in a specific region that offer a particular cuisine.
+    
+    **MongoDB**: MongoDB uses JavaScript as its querying language. For developers familiar with JavaScript, MongoDB queries can feel intuitive. Its queries are represented as JSON-style documents.
+    
+    **Example**: In Uber, where developers might be iterating fast and dealing with semi-structured and geographically distributed data, they might benefit from MongoDB's intuitive, flexible query language to quickly
