@@ -1,99 +1,93 @@
-1. Problem: Create a Customers table / collection with the following fields: id (unique identifier), name, email, address, and phone_number.
-```
-db.Customers.insertOne({
-  "_id": 1,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "address": "123 Main St",
-  "phone_number": "555-1234"
-})
 
+**Problem 1:** Create a **`Customers`** table / collection with the following fields: **`id`** (unique identifier), **`name`**, **`email`**, **`address`**, and **`phone_number`**.
 ```
-2. Problem: Insert five rows / documents into the Customers table / collection with data of your choice.
+db.createCollection("Customers")
+```
+
+
+**Problem 2:** Insert five rows / documents into the **`Customers`** table / collection with data of your choice.
+
 ```
 db.Customers.insertMany([
-  {
-    "name": "Alice",
-    "email": "alice@example.com",
-    "address": "456 Elm St",
-    "phone_number": "555-5678"
-  },
-  {
-    "name": "Bob",
-    "email": "bob@example.com",
-    "address": "789 Oak St",
-    "phone_number": "555-9012"
-  },
-  {
-    "name": "Charlie",
-    "email": "charlie@example.com",
-    "address": "123 Maple Ave",
-    "phone_number": "555-3456"
-  },
-  {
-    "name": "Diana",
-    "email": "diana@example.com",
-    "address": "987 Pine St",
-    "phone_number": "555-7890"
-  },
-  {
-    "name": "Eve",
-    "email": "eve@example.com",
-    "address": "654 Cedar Ln",
-    "phone_number": "555-1234"
-  }
-])
+    { id: 1, name: 'John Doe', email: 'john@example.com', address: '123 Main St', phone_number: '1234567890' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', address: '456 Oak Ave', phone_number: '9876543210' },
+    { id: 3, name: 'Alice Johnson', email: 'alice@example.com', address: '789 Elm Rd', phone_number: '4561237890' },
+    { id: 4, name: 'Bob Williams', email: 'bob@example.com', address: '321 Pine Ln', phone_number: '7890123456' },
+    { id: 5, name: 'Sarah Davis', email: 'sarah@example.com', address: '567 Maple Dr', phone_number: '5432109876' }
+]);
+```
+
+**Problem 3:** Write a query to fetch all data from the **`Customers`** table / collection.
 
 ```
-3. Problem: Write a query to fetch all data from the Customers table / collection.
+db.Customers.find()
+
 ```
-db.Customers.find({})
-```
-4. Problem: Write a query to select only the name and email fields for all customers.
+**Problem 4:** Write a query to select only the **`name`** and **`email`** fields for all customers.
+
+
 ```
 db.Customers.find({}, { name: 1, email: 1 })
+
 ```
-5. Problem: Write a query to fetch the customer with the id of 3.
+**Problem 5:** Write a query to fetch the customer with the **`id`** of 3.
+
 ```
-db.Customers.findOne({ _id: "64a6b0f3f604ab1e13e029b5" })
+db.Customers.find({ id: 3 });
 ```
-6. Problem: Write a query to fetch all customers whose name starts with 'A'.
+
+**Problem 6:** Write a query to fetch all customers whose **`name`** starts with 'A'.
+
 ```
-db.Customers.find({ name: { $regex: '^A', $options: 'i' } })
+db.Customers.find({ name: /^A/ });
 ```
-7. Problem: Write a query to fetch all customers, ordered by name in descending order.
+**Problem 7:** Write a query to fetch all customers, ordered by **`name`** in descending order.
+
 ```
-db.Customers.find().sort({ name: -1 })
+db.Customers.find().sort({ name: -1 });
 ```
-8. Problem: Write a query to update the address of the customer with id 4.
+**Problem 8:** Write a query to update the **`address`** of the customer with **`id`** 4.
+
 ```
-db.Customers.updateOne({ _id: 4 }, { $set: { address: "New Address" } })
+db.Customers.updateOne({ id: 4 }, { $set: { address: 'New Address' } });
 ```
-9. Problem: Write a query to fetch the top 3 customers when ordered by id in ascending order.
+**Problem 9:** Write a query to fetch the top 3 customers when ordered by **`id`** in ascending order.
+
 ```
-db.Customers.find().sort({ _id: 1 }).limit(3)
+db.Customers.find().sort({ id: 1 }).limit(3);
 ```
-10. Problem: Write a query to delete the customer with id 2.
+**Problem 10:** Write a query to delete the customer with **`id`** 2.
+
 ```
-db.Customers.deleteOne({ _id: 2 })
+db.Customers.deleteOne({ id: 2 });
 ```
-11. Problem: Write a query to count the number of customers.
+
+**Problem 11:** Write a query to count the number of customers.
+
 ```
-db.Customers.countDocuments()
+db.Customers.countDocuments();
 ```
-12. Problem: Write a query to fetch all customers except the first two when ordered by id in ascending order.
+**Problem 12:** Write a query to fetch all customers except the first two when ordered by **`id`** in ascending order.
+
 ```
-db.Customers.find().sort({ _id: 1 }).skip(2)
+db.Customers.find().sort({ id: 1 }).skip(2);
 ```
-13. Problem: Write a query to fetch all customers whose id is greater than 2 and name starts with 'B'.
+
+**Problem 13:** Write a query to fetch all customers whose **`id`** is greater than 2 and **`name`** starts with 'B'.
+
+
 ```
-db.Customers.find({ _id: { $gt: 2 }, name: { $regex: '^B', $options: 'i' } })
+db.Customers.find({ id: { $gt: 2 }, name: /^B/ });
 ```
-14. Problem: Write a query to fetch all customers whose id is less than 3 or name ends with 's'.
+**Problem 14:** Write a query to fetch all customers whose **`id`** is less than 3 or **`name`** ends with 's'.
+
+
 ```
-db.Customers.find({ $or: [ { _id: { $lt: 3 } }, { name: { $regex: 's$', $options: 'i' } } ] })
+db.Customers.find({ $or: [{ id: { $lt: 3 } }, { name: /s$/ }] });
+
 ```
-15. Problem: Write a query to fetch all customers where the phone_number field is not set or is null.
+**Problem 15:** Write a query to fetch all customers where the **`phone_number`** field is not set or is null.
+
 ```
-db.Customers.find({ $or: [ { phone_number: { $exists: false } }, { phone_number: null } ] })
+db.Customers.find({ $or: [{ phone_number: null }, { phone_number: '' }] });
 ```
