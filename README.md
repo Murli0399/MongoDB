@@ -1,4 +1,4 @@
-# MongoDB Learning Repository - Basic Queries
+# MongoDB Learning Repository
 Welcome to the MongoDB Learning Repository! This repository is a comprehensive collection of basic MongoDB queries and examples to help you get started with MongoDB, a popular NoSQL database used for storing and retrieving data.
 
 ## Introduction to MongoDB
